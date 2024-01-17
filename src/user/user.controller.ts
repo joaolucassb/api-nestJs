@@ -1,10 +1,19 @@
-import { Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
 @Controller('users')
 export class UserController {
+  @Post()
+  async create(@Body() body: string) {
+    return { body };
+  }
 
-    @Post()
-    async create() {
-        return {};
-    }
+  @Get()
+  async read() {
+    return { users: [] };
+  }
+
+  @Get(':id')
+  async readOne(@Param() params: string) {
+    return { user: {}, params };
+  }
 }
