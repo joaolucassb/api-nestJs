@@ -3,11 +3,9 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   Post,
   Put,
   Patch,
-  ParseIntPipe,
   UseInterceptors
 } from '@nestjs/common';
 import { CreateUserDTO } from './dto/create-user.dto';
@@ -15,6 +13,7 @@ import { UpdatePutUserDTO } from './dto/update-put-user.dto';
 import { UpdatePatchUserDTO } from './dto/update-patch-user.dto';
 import { UserService } from './user.service';
 import { LogInterceptor } from 'src/interceptors/log.interceptor';
+import { ParamId } from 'src/decorator/param-id.decorator';
 
 
 @UseInterceptors(LogInterceptor)
@@ -34,22 +33,23 @@ export class UserController {
   }
 
   @Get(':id')
-  async readOne(@Param('id', ParseIntPipe) id: number) {
+  async readOne(@ParamId() id: number) {
+    console.log({id});
     return this.userService.show(id);
   }
 
   @Put(':id')
-  async update(@Body() data: UpdatePutUserDTO, @Param('id', ParseIntPipe) id: number) {
+  async update(@Body() data: UpdatePutUserDTO, @ParamId() id: number) {
     return this.userService.update(id ,data);
   }
 
   @Patch(':id')
-  async updatePartial(@Body() data: UpdatePatchUserDTO, @Param('id', ParseIntPipe) id: number) {
+  async updatePartial(@Body() data: UpdatePatchUserDTO, @ParamId() id: number) {
     return this.userService.updatePartical(id, data);
   }
 
   @Delete(':id')
-  async delete(@Param('id', ParseIntPipe) id: number) {
+  async delete(@ParamId() id: number) {
     return this.userService.delete(id);
   }
 }
