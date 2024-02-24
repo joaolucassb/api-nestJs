@@ -6,7 +6,7 @@ import {
   Post,
   Put,
   Patch,
-  UseInterceptors
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdatePutUserDTO } from './dto/update-put-user.dto';
@@ -15,11 +15,9 @@ import { UserService } from './user.service';
 import { LogInterceptor } from 'src/interceptors/log.interceptor';
 import { ParamId } from 'src/decorator/param-id.decorator';
 
-
 @UseInterceptors(LogInterceptor)
 @Controller('users')
 export class UserController {
-
   constructor(private readonly userService: UserService) {}
 
   @Post()
@@ -34,13 +32,13 @@ export class UserController {
 
   @Get(':id')
   async readOne(@ParamId() id: number) {
-    console.log({id});
+    console.log({ id });
     return this.userService.show(id);
   }
 
   @Put(':id')
   async update(@Body() data: UpdatePutUserDTO, @ParamId() id: number) {
-    return this.userService.update(id ,data);
+    return this.userService.update(id, data);
   }
 
   @Patch(':id')
